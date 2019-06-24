@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class ScoringActivity : AppCompatActivity() {
 
-    lateinit var title: TextView
     lateinit var bottomNavigationView: BottomNavigationView
     lateinit var menuItem: MenuItem
 
@@ -35,8 +34,6 @@ class ScoringActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scoring)
 
-        title = findViewById(R.id.scoringTitle)
-        title.setText("SCORING ACTIVITY")
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 

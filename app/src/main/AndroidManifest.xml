@@ -19,8 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScoringActivity"> </activity>
-        <activity android:name=".TeamActivity"> </activity>
+        <activity android:name=".ScoringActivity" android:label="@string/title_scoring"> </activity>
+        <activity android:name=".TeamActivity" android:label="@string/title_team"> </activity>
+        <activity android:name=".NewScoringActivity" android:label="@string/newScoring"></activity>
     </application>
 
 </manifest>
