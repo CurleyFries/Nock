@@ -1,5 +1,6 @@
 package edu.jcurley217ucla.nock
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -10,12 +11,33 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.time.LocalDate
 
 class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.ViewHolder.OnEndListener {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode)
+        {
+            1 -> if(resultCode == Activity.RESULT_OK)
+                {
+                    var endToChange = data!!.getIntExtra("end", 1)
+                    var b : Bundle = data.extras
+                    var newScores = b.getStringArray("scores")
+                    ScoringRound.changeEnd(endToChange-1, newScores)
+                    recyclerView.adapter!!.notifyDataSetChanged()
+                }
+        }
+
+
+
+    }
     override fun onEndClick(position: Int) {
         //TODO("not implemented") To change body of created functions use File | Settings | File Templates.
         val endIntent = Intent(this, InputScoresActivity::class.java)
         endIntent.putExtra("end", position+1)
+        var b = Bundle()
+        b.putStringArray("scores", ScoringRound.scores[position])
+        endIntent.putExtras(b)
         endIntent.putExtra("arrowsPerEnd", intent.getIntExtra("arrowsPerEnd", 1))
-        startActivity(endIntent)
+        startActivityForResult(endIntent, 1)
     }
 
     lateinit var ScoringRound : ScoringRound//= edu.jcurley217ucla.nock.ScoringRound("Today", "Barebow", "18m", "40cm", 20, 3)
@@ -32,7 +54,7 @@ class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.
         Log.i("Intent Receiving", "target size was " + intent.getStringExtra("targetSize"))
 
         ScoringRound = edu.jcurley217ucla.nock.ScoringRound("Today", intent.getStringExtra("division"),
-                intent.getStringExtra("distance"), intent.getStringExtra("targetSize"),20, intent.getIntExtra("arrowsPerEnd", 1))
+                intent.getStringExtra("distance"), intent.getStringExtra("targetSize"),intent.getIntExtra("numEnds", 1), intent.getIntExtra("arrowsPerEnd", 1))
 
         recyclerView=findViewById(R.id.recyclerView)
         initRecyclerView()

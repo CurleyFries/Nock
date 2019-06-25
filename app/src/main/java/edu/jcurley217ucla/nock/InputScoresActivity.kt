@@ -1,5 +1,7 @@
 package edu.jcurley217ucla.nock
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.TextViewCompat
 import android.support.v7.app.AppCompatActivity
@@ -23,17 +25,22 @@ class InputScoresActivity : AppCompatActivity() {
 
         val arrowsPerEnd: Int = intent.getIntExtra("arrowsPerEnd", 3)
 
-        arrowValues = arrayOfNulls<String>(arrowsPerEnd)
+        var b : Bundle = intent.extras
+        arrowValues= b.getStringArray("scores")
+
         for(i in 0..arrowsPerEnd-1)
         {
-            arrowValues[i]= ""
+            if(arrowValues[i]!= "")
+                index++
+            else
+                break
         }
+        index = minOf(arrowsPerEnd-1, index)
         endScore = findViewById(R.id.arrowValues)
         endScore.text=arrowValues.joinToString(separator = " ")
         TextViewCompat.setAutoSizeTextTypeWithDefaults(endScore, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM)
 
         endNumber = findViewById(R.id.endNumber)
-        //TODO: Use end number that is passed in
         endNumber.text = "End " + intent.getIntExtra("end", 1)
 
 
@@ -95,6 +102,18 @@ class InputScoresActivity : AppCompatActivity() {
         val clrButton: Button = findViewById(R.id.clrButton)
         clrButton.setOnClickListener{
             clearValues()
+        }
+
+        val confirmButton: Button = findViewById(R.id.confirmButton)
+        confirmButton.setOnClickListener{
+            val returnIntent = Intent(this, ScoringOverviewActivity::class.java)
+            returnIntent.putExtra("end", intent.getIntExtra("end", 1))
+            var b = Bundle()
+            b.putStringArray("scores", arrowValues)
+            returnIntent.putExtras(b)
+
+            setResult(Activity.RESULT_OK, returnIntent)
+            finish()
         }
 
 

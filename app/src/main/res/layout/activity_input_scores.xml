@@ -23,7 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="45"
+            android:layout_gravity="fill"
             android:paddingVertical="72dp"
+            android:layout_marginHorizontal="32dp"
             android:gravity="center"
             android:text="X X X"
             android:autoSizeTextType="uniform"/>

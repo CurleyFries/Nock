@@ -50,7 +50,7 @@ class ScoringRoundRecyclerAdapter(private var scoringRound: ScoringRound, onEndL
         fun bind(scoringRound: ScoringRound, curEnd: Int)
         {
             end?.text = (curEnd+1).toString()
-            scores?.text = scoringRound.scores[curEnd].joinToString()
+            scores?.text = scoringRound.scores[curEnd].joinToString(separator = " ")
             endTotal?.text = scoringRound.computeEndTotal(curEnd).toString()
             runningTotal?.text = scoringRound.computeRunningTotal(curEnd).toString()
         }

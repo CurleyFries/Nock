@@ -17,28 +17,8 @@ class ScoringRound(date: String, division: String, distance: String, targetSize:
         scores = Array(ends){Array(arrowsPerEnd){""}}
         for(i in 0..ends-1)
         {
-            scores[i] = arrayOf("X", "X", "X")
+            scores[i] = Array(arrowsPerEnd){""}
         }
-//        scores[0]= arrayOf("X", "10", "9")
-//        scores[1] = arrayOf("9", "9", "8")
-//        scores[2] = arrayOf("8", "8", "7")
-//        scores[3]= arrayOf("X", "10", "9")
-//        scores[4] = arrayOf("9", "9", "8")
-//        scores[5] = arrayOf("8", "8", "7")
-//        scores[6]= arrayOf("X", "10", "9")
-//        scores[7] = arrayOf("9", "9", "8")
-//        scores[8] = arrayOf("8", "8", "7")
-//        scores[9] = arrayOf("X","X", "X")
-//        scores[10]= arrayOf("X", "10", "9")
-//        scores[11] = arrayOf("9", "9", "8")
-//        scores[12] = arrayOf("8", "8", "7")
-//        scores[13]= arrayOf("X", "10", "9")
-//        scores[14] = arrayOf("9", "9", "8")
-//        scores[15] = arrayOf("8", "8", "7")
-//        scores[16]= arrayOf("X", "10", "9")
-//        scores[17] = arrayOf("9", "9", "8")
-//        scores[18] = arrayOf("8", "8", "7")
-//        scores[19] = arrayOf("X","X", "X")
     }
 
     fun changeEnd(end: Int, endScores: Array<String>)
