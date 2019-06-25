@@ -13,6 +13,7 @@
     <string name="defaultEnds">10</string>
     <string name="arrows_per_end">Arrows Per End</string>
     <string name="preset_test_button">Preset Test Button</string>
+    <string name="scoringRound">Scoring Round</string>
     <!--End Scoring Names-->
     <string-array name="divisions_array">
         <item>Barebow</item>

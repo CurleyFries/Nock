@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.service.autofill.TextValueSanitizer
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
@@ -127,6 +128,17 @@ class NewScoringActivity : AppCompatActivity() {
             numEnds.text= numberOfEnds.toString()
         }
 
+        val startScoring: FloatingActionButton = findViewById(R.id.startScoring)
+        startScoring.setOnClickListener {
+            val startScoringIntent = Intent(this, ScoringOverviewActivity::class.java)
+            startScoringIntent.putExtra("division", division)
+            startScoringIntent.putExtra("distance", distance)
+            startScoringIntent.putExtra("targetSize", target)
+            startScoringIntent.putExtra("numEnds", numberOfEnds)
+            startScoringIntent.putExtra("arrowsPerEnd", arrowsPerEnd)
+            startActivity(startScoringIntent)
+            //Toast.makeText(applicationContext, "Start scoring was pushed", Toast.LENGTH_SHORT).show()
+        }
 //        Preset Test Button
         presetTestButton = findViewById(R.id.presetTestButton)
         presetTestButton.setOnClickListener{
