@@ -1,5 +1,6 @@
 package edu.jcurley217ucla.nock
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -8,7 +9,14 @@ import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import java.time.LocalDate
 
-class ScoringOverviewActivity: AppCompatActivity() {
+class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.ViewHolder.OnEndListener {
+    override fun onEndClick(position: Int) {
+        //TODO("not implemented") To change body of created functions use File | Settings | File Templates.
+        val endIntent = Intent(this, InputScoresActivity::class.java)
+        endIntent.putExtra("end", position+1)
+        endIntent.putExtra("arrowsPerEnd", intent.getIntExtra("arrowsPerEnd", 1))
+        startActivity(endIntent)
+    }
 
     lateinit var ScoringRound : ScoringRound//= edu.jcurley217ucla.nock.ScoringRound("Today", "Barebow", "18m", "40cm", 20, 3)
     lateinit var scoringRRA : ScoringRoundRecyclerAdapter
@@ -34,7 +42,7 @@ class ScoringOverviewActivity: AppCompatActivity() {
     fun initRecyclerView() {
         var linearLayoutManager: LinearLayoutManager = LinearLayoutManager(this)
         recyclerView.setLayoutManager(linearLayoutManager)
-        scoringRRA = ScoringRoundRecyclerAdapter(ScoringRound)
+        scoringRRA = ScoringRoundRecyclerAdapter(ScoringRound, this)
         recyclerView.adapter = scoringRRA
     }
 

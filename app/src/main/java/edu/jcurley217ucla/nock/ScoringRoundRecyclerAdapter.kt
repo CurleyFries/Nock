@@ -2,15 +2,18 @@ package edu.jcurley217ucla.nock
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class ScoringRoundRecyclerAdapter(private var scoringRound: ScoringRound): RecyclerView.Adapter<ScoringRoundRecyclerAdapter.ViewHolder>() {
+class ScoringRoundRecyclerAdapter(private var scoringRound: ScoringRound, onEndListener: ViewHolder.OnEndListener): RecyclerView.Adapter<ScoringRoundRecyclerAdapter.ViewHolder>() {
+
+    val monEndListener = onEndListener
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         val inflater = LayoutInflater.from(p0.context)
-        return ViewHolder(inflater,p0)
+        return ViewHolder(inflater,p0,monEndListener)
     }
 
     override fun getItemCount(): Int {
@@ -23,17 +26,25 @@ class ScoringRoundRecyclerAdapter(private var scoringRound: ScoringRound): Recyc
         p0.bind(scoringRound,p1)
     }
 
-    class ViewHolder(inflater: LayoutInflater, parent: ViewGroup) : RecyclerView.ViewHolder(inflater.inflate(R.layout.scores_adapter_view_layout, parent, false)) {
+    class ViewHolder(inflater: LayoutInflater, parent: ViewGroup, onEndListener: OnEndListener) : RecyclerView.ViewHolder(inflater.inflate(R.layout.scores_adapter_view_layout, parent, false)), View.OnClickListener {
+        override fun onClick(v: View?) {
+            monEndListener.onEndClick(adapterPosition)
+        }
+
         private var end: TextView? = null
         private var scores: TextView? = null
         private var endTotal: TextView? = null
         private var runningTotal: TextView? = null
+        lateinit var monEndListener: OnEndListener
 
         init {
             end = itemView.findViewById(R.id.endNumber)
             scores = itemView.findViewById(R.id.arrowValues)
             endTotal = itemView.findViewById(R.id.endTotal)
             runningTotal = itemView.findViewById(R.id.runningTotal)
+            monEndListener = onEndListener
+
+            itemView.setOnClickListener(this)
         }
 
         fun bind(scoringRound: ScoringRound, curEnd: Int)
@@ -43,5 +54,11 @@ class ScoringRoundRecyclerAdapter(private var scoringRound: ScoringRound): Recyc
             endTotal?.text = scoringRound.computeEndTotal(curEnd).toString()
             runningTotal?.text = scoringRound.computeRunningTotal(curEnd).toString()
         }
+
+        interface OnEndListener {
+            fun onEndClick(position: Int)
+        }
     }
+
+
 }
