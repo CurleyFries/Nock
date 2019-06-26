@@ -24,6 +24,8 @@
         <activity android:name=".NewScoringActivity" android:label="@string/newScoring"></activity>
         <activity android:name=".ScoringOverviewActivity" android:label="@string/scoringRound"></activity>
         <activity android:name=".InputScoresActivity" android:label="Input Scores"></activity>
+        <activity android:name=".PreviousScoringActivity" android:label="Previous Scoring Rounds"></activity>
+        <activity android:name=".PreviousScoringOverviewActivity" android:label="Previous Scores"></activity>
     </application>
 
 </manifest>

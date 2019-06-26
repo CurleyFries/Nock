@@ -1,9 +1,10 @@
 package edu.jcurley217ucla.nock
 
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class ScoringRound(date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int) {
+class ScoringRound(date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int): Serializable {
     //TODO: Get current date
     val date = date
     val division = division

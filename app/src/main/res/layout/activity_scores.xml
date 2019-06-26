@@ -64,6 +64,7 @@
         android:layout_height="0dp"
         android:layout_weight="8"
         android:text="Complete Scoring"
+        android:id="@+id/completeScoring"
         android:background="@color/colorPrimary"/>
 </LinearLayout>
 </android.support.constraint.ConstraintLayout>

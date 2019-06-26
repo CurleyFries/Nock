@@ -11,18 +11,15 @@ class ScoringRoundRecyclerAdapter(private var scoringRound: ScoringRound, onEndL
     val monEndListener = onEndListener
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         val inflater = LayoutInflater.from(p0.context)
         return ViewHolder(inflater,p0,monEndListener)
     }
 
     override fun getItemCount(): Int {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         return scoringRound.ends
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         p0.bind(scoringRound,p1)
     }
 

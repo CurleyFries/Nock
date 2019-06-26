@@ -30,7 +30,6 @@ class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.
 
     }
     override fun onEndClick(position: Int) {
-        //TODO("not implemented") To change body of created functions use File | Settings | File Templates.
         val endIntent = Intent(this, InputScoresActivity::class.java)
         endIntent.putExtra("end", position+1)
         var b = Bundle()
@@ -53,6 +52,7 @@ class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.
         Log.i("Intent Receiving", "distance was " + intent.getStringExtra("distance"))
         Log.i("Intent Receiving", "target size was " + intent.getStringExtra("targetSize"))
 
+        //TODO: Get Correct Date
         ScoringRound = edu.jcurley217ucla.nock.ScoringRound("Today", intent.getStringExtra("division"),
                 intent.getStringExtra("distance"), intent.getStringExtra("targetSize"),intent.getIntExtra("numEnds", 1), intent.getIntExtra("arrowsPerEnd", 1))
 

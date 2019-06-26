@@ -121,7 +121,6 @@
             android:layout_alignParentLeft="true">
         </Spinner>
 
-        <!--TODO: Use Floating Button for Starting Scoring-->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/startScoring"
             android:layout_width="wrap_content"
