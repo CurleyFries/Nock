@@ -26,6 +26,9 @@
         <activity android:name=".InputScoresActivity" android:label="Input Scores"></activity>
         <activity android:name=".PreviousScoringActivity" android:label="Previous Scoring Rounds"></activity>
         <activity android:name=".PreviousScoringOverviewActivity" android:label="Previous Scores"></activity>
+        <activity android:name=".NewPresetActivity" android:label="Create New Preset"></activity>
+        <activity android:name=".ViewPresetsActivity" android:label="View Presets"></activity>
+        <activity android:name=".LoadFromPresetActivity" android:label="Load From Preset"></activity>
     </application>
 
 </manifest>

@@ -17,7 +17,9 @@
             android:id="@+id/newScoringButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginHorizontal="40dp"
             android:text="@string/newScoring"/>
 
         <Button
@@ -26,6 +28,20 @@
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
             android:text="@string/previousScoring"/>
+
+        <Button
+            android:id="@+id/newPresetButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:text="Create New Preset"/>
+
+        <Button
+            android:id="@+id/viewPresetButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:text="View Presets"/>
 
     </LinearLayout>
 

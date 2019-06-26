@@ -14,17 +14,17 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/presetTestButton"
+            android:id="@+id/loadPresetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/preset_test_button"
+            android:text="Load From Preset"
             android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/divisionLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/presetTestButton"
+            android:layout_below="@+id/loadPreset"
             android:layout_alignLeft="@+id/divisionSpinner"
             android:text="@string/division"/>
 
@@ -120,6 +120,14 @@
             android:layout_below="@+id/arrowPerEndLabel"
             android:layout_alignParentLeft="true">
         </Spinner>
+
+        <!--TODO: IMPLEMENT SAVE AS PRESET FUNCTIONALITY-->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/arrowSpinner"
+            android:layout_margin="40dp"
+            android:text="Save as Preset"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/startScoring"

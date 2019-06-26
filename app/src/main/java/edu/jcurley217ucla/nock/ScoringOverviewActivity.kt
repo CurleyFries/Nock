@@ -25,9 +25,6 @@ class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.
                     recyclerView.adapter!!.notifyDataSetChanged()
                 }
         }
-
-
-
     }
     override fun onEndClick(position: Int) {
         val endIntent = Intent(this, InputScoresActivity::class.java)

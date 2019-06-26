@@ -1,5 +1,6 @@
 package edu.jcurley217ucla.nock
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.service.autofill.TextValueSanitizer
@@ -9,9 +10,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import edu.jcurley217ucla.nock.R.id.divisionSpinner
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_new_scoring.view.*
+
+
 
 /**
  * Created on 6/24
@@ -23,7 +27,6 @@ var target : String = "40cm"
 var numberOfEnds : Int = 10
 var arrowsPerEnd: Int = 1
 
-
 class NewScoringActivity : AppCompatActivity() {
 
     lateinit var bottomNavigationView: BottomNavigationView
@@ -31,7 +34,52 @@ class NewScoringActivity : AppCompatActivity() {
     lateinit var numEnds: TextView
     lateinit var increaseButton: Button
     lateinit var decreaseButton: Button
-    lateinit var presetTestButton: Button
+    lateinit var loadFromPresetButton: Button
+    lateinit var divisionSpinner: Spinner
+    lateinit var distanceSpinner: Spinner
+    lateinit var targetSpinner: Spinner
+    lateinit var arrowSpinner: Spinner
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(requestCode)
+        {
+            1 -> if(resultCode == Activity.RESULT_OK)
+            {
+                division = data!!.getStringExtra("division")
+                distance = data.getStringExtra("distance")
+                target = data.getStringExtra("targetSize")
+                numberOfEnds = data.getIntExtra("numEnds", 1)
+                arrowsPerEnd = data.getIntExtra("arrowsPerEnd", 3)
+
+                for (i in 0 until divisionSpinner.getCount()) {
+                    if (divisionSpinner.getItemAtPosition(i).toString()==division) {
+                        divisionSpinner.setSelection(i)
+                    }
+                }
+                for (i in 0 until distanceSpinner.getCount()) {
+                    if (distanceSpinner.getItemAtPosition(i).toString()==distance) {
+                        distanceSpinner.setSelection(i)
+                    }
+                }
+                for (i in 0 until targetSpinner.getCount()) {
+                    if (targetSpinner.getItemAtPosition(i).toString()==target) {
+                        targetSpinner.setSelection(i)
+                    }
+                }
+                for (i in 0 until arrowSpinner.getCount()) {
+                    if (arrowSpinner.getItemAtPosition(i).toString()== arrowsPerEnd.toString()) {
+                        arrowSpinner.setSelection(i)
+                    }
+                }
+
+                numEnds.text= numberOfEnds.toString()
+
+
+            }
+        }
+    }
 
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -56,7 +104,7 @@ class NewScoringActivity : AppCompatActivity() {
         menuItem.setChecked(true)
 
 //        Division Spinner
-        val divisionSpinner: Spinner = findViewById(R.id.divisionSpinner)
+        divisionSpinner = findViewById(R.id.divisionSpinner)
         divisionSpinner.onItemSelectedListener = DivisionSpinnerClass()
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
@@ -70,7 +118,7 @@ class NewScoringActivity : AppCompatActivity() {
             divisionSpinner.adapter = adapter
         }
 //        Distance Spinner
-        val distanceSpinner: Spinner = findViewById(R.id.distanceSpinner)
+        distanceSpinner = findViewById(R.id.distanceSpinner)
         distanceSpinner.onItemSelectedListener = DistanceSpinnerClass()
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
@@ -84,7 +132,7 @@ class NewScoringActivity : AppCompatActivity() {
             distanceSpinner.adapter = adapter
         }
 //        Target Spinner
-        val targetSpinner: Spinner = findViewById(R.id.targetSpinner)
+        targetSpinner = findViewById(R.id.targetSpinner)
         targetSpinner.onItemSelectedListener = TargetSpinnerClass()
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
@@ -98,7 +146,7 @@ class NewScoringActivity : AppCompatActivity() {
             targetSpinner.adapter = adapter
         }
 //        Arrows Per End Spinner
-        val arrowSpinner: Spinner = findViewById(R.id.arrowSpinner)
+       arrowSpinner = findViewById(R.id.arrowSpinner)
         arrowSpinner.onItemSelectedListener = ArrowSpinnerClass()
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter.createFromResource(
@@ -140,16 +188,10 @@ class NewScoringActivity : AppCompatActivity() {
             //Toast.makeText(applicationContext, "Start scoring was pushed", Toast.LENGTH_SHORT).show()
         }
 //        Preset Test Button
-        presetTestButton = findViewById(R.id.presetTestButton)
-        presetTestButton.setOnClickListener{
-            divisionSpinner.setSelection(1)
-            division=divisionSpinner.getItemAtPosition(1).toString()
-            distanceSpinner.setSelection(1)
-            distance=distanceSpinner.getItemAtPosition(1).toString()
-            targetSpinner.setSelection(1)
-            target= targetSpinner.getItemAtPosition(1).toString()
-            arrowSpinner.setSelection(1)
-            arrowsPerEnd = arrowSpinner.getItemAtPosition(1).toString().toInt()
+        loadFromPresetButton = findViewById(R.id.loadPresetButton)
+        loadFromPresetButton.setOnClickListener{
+            val presetIntent = Intent(this, LoadFromPresetActivity::class.java)
+            startActivityForResult(presetIntent, 1)
         }
     }
 }
@@ -160,7 +202,7 @@ class DivisionSpinnerClass : AdapterView.OnItemSelectedListener
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         division=parent.getItemAtPosition(pos).toString()
-        Toast.makeText(parent.context, division + " was selected in Division", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(parent.context, division + " was selected in Division", Toast.LENGTH_SHORT).show()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
@@ -174,7 +216,7 @@ class DistanceSpinnerClass : AdapterView.OnItemSelectedListener
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         distance = parent.getItemAtPosition(pos).toString()
-        Toast.makeText(parent.context, distance + " was selected in Distance", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(parent.context, distance + " was selected in Distance", Toast.LENGTH_SHORT).show()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
@@ -188,7 +230,7 @@ class TargetSpinnerClass : AdapterView.OnItemSelectedListener
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         target = parent.getItemAtPosition(pos).toString()
-        Toast.makeText(parent.context, target + " was selected in Target", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(parent.context, target + " was selected in Target", Toast.LENGTH_SHORT).show()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
@@ -202,10 +244,11 @@ class ArrowSpinnerClass : AdapterView.OnItemSelectedListener
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         arrowsPerEnd = parent.getItemAtPosition(pos).toString().toInt()
-        Toast.makeText(parent.context, arrowsPerEnd.toString() + " was selected in Arrows Per End", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(parent.context, arrowsPerEnd.toString() + " was selected in Arrows Per End", Toast.LENGTH_SHORT).show()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>) {
         // Another interface callback
     }
 }
+

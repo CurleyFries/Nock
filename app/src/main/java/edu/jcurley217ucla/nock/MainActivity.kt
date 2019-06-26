@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_scoring -> {
-                val intentScoring = Intent(this,PreviousScoringActivity::class.java)
+                val intentScoring = Intent(this,ScoringActivity::class.java)
                 startActivity(intentScoring)
                 return@OnNavigationItemSelectedListener true
             }
