@@ -35,6 +35,8 @@ class PreviousScoringRecyclerAdapter(private var scoringRoundList: ArrayList<Sco
         private var division: TextView? = null
         private var distance: TextView? = null
         private var targetSize: TextView? = null
+        private var numEnds: TextView? = null
+        private var arrowsPerEnd: TextView? = null
         lateinit var monEndListener: OnEndListener
 
         init {
@@ -44,6 +46,8 @@ class PreviousScoringRecyclerAdapter(private var scoringRoundList: ArrayList<Sco
             division = itemView.findViewById(R.id.division)
             distance = itemView.findViewById(R.id.distance)
             targetSize = itemView.findViewById(R.id.targetSize)
+            numEnds = itemView.findViewById(R.id.numEnds)
+            arrowsPerEnd = itemView.findViewById(R.id.arrowsPerEnd)
             monEndListener = onEndListener
 
             itemView.setOnClickListener(this)
@@ -60,6 +64,8 @@ class PreviousScoringRecyclerAdapter(private var scoringRoundList: ArrayList<Sco
             division?.text = scoringRoundList[index].division
             distance?.text = scoringRoundList[index].distance
             targetSize?.text = scoringRoundList[index].targetSize
+            numEnds?.text = scoringRoundList[index].ends.toString()
+            arrowsPerEnd?.text = scoringRoundList[index].arrowsPerEnd.toString()
         }
 
         interface OnEndListener {

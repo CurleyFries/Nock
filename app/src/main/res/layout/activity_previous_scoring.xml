@@ -21,7 +21,7 @@
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="15"
+                android:layout_weight="10"
                 android:textSize="16sp"
                 android:layout_marginHorizontal="8dp"
                 android:lines="2"
@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="15"
+                android:layout_weight="10"
                 android:text="Total Score"
                 android:textSize="16sp"
                 android:layout_marginHorizontal="8dp"/>
@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Avg. Arrow"
-                android:layout_weight="15"
+                android:layout_weight="10"
                 android:lines="2"
                 android:textSize="16sp"
                 android:layout_marginHorizontal="8dp"/>
@@ -52,7 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="25"
+                android:layout_weight="15"
                 android:layout_marginHorizontal="8dp">
 
                 <TextView
@@ -82,6 +82,25 @@
                     android:layout_weight="1"
                     android:textSize="12sp"/>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/numEnds"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="Ends"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/arrowsPerEnd"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="15"
+                android:text="Arrows Per End"
+                android:lines="2"
+                android:textSize="16sp"/>
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
