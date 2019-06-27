@@ -123,6 +123,7 @@
 
         <!--TODO: IMPLEMENT SAVE AS PRESET FUNCTIONALITY-->
         <Button
+            android:id="@+id/saveAsPresetButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/arrowSpinner"

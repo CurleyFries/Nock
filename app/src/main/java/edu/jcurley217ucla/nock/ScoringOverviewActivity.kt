@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
 import java.time.LocalDate
 
 class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.ViewHolder.OnEndListener {
+
+    lateinit var dbHelper: DatabaseHelper
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -45,6 +48,8 @@ class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scores)
 
+        dbHelper = DatabaseHelper(this)
+
         Log.i("Intent Receiving", "division was " + intent.getStringExtra("division"))
         Log.i("Intent Receiving", "distance was " + intent.getStringExtra("distance"))
         Log.i("Intent Receiving", "target size was " + intent.getStringExtra("targetSize"))
@@ -55,6 +60,16 @@ class ScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.
 
         recyclerView=findViewById(R.id.recyclerView)
         initRecyclerView()
+
+        val completeScoringButton: Button = findViewById(R.id.completeScoring)
+        completeScoringButton.setOnClickListener{
+            dbHelper.insertScoringRound(ScoringRound)
+            var returnHomeIntent = Intent(this, MainActivity::class.java)
+            returnHomeIntent.flags=Intent.FLAG_ACTIVITY_CLEAR_TOP
+            //returnHomeIntent.flags=Intent.FLAG_ACTIVITY_NO_HISTORY
+            startActivity(returnHomeIntent)
+            finish()
+        }
 
     }
 

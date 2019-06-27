@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_scoring.*
 import java.time.LocalDate
 
 class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapter.ViewHolder.OnEndListener {
+
+    lateinit var dbHelper: DatabaseHelper
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -47,25 +49,9 @@ class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapt
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_previous_scoring)
 
-    //TODO: Pull Scoring Rounds from Database
-        for(i in 1..10)
-        {
-            var ScoringRound =  edu.jcurley217ucla.nock.ScoringRound("Today", "Barebow", "18m", "40cm", 10, 3)
-            for(j in 0..9)
-            {
-                var scores = Array(3){""}
-                val valScore1 = (1..10).shuffled().first()
-                val valScore2 = (1..10).shuffled().first()
-                val valScore3 = (1..10).shuffled().first()
-                scores[0]=valScore1.toString()
-                scores[1]=valScore2.toString()
-                scores[2]=valScore3.toString()
-                ScoringRound.changeEnd(j,scores)
+        dbHelper = DatabaseHelper(this)
 
-            }
-            scoringRoundList.add(ScoringRound)
-        }
-
+        scoringRoundList = dbHelper.readScoringRoundList()
 
         recyclerView=findViewById(R.id.recyclerView)
         initRecyclerView()

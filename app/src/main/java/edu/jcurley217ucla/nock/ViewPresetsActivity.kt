@@ -13,6 +13,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.time.LocalDate
 
 class ViewPresetsActivity: AppCompatActivity(), ViewPresetsRecyclerAdapter.ViewHolder.OnEndListener {
+
+    lateinit var dbHelper: DatabaseHelper
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 //
@@ -50,15 +53,10 @@ class ViewPresetsActivity: AppCompatActivity(), ViewPresetsRecyclerAdapter.ViewH
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_presets)
 
+        dbHelper = DatabaseHelper(this)
 
-        val preset1 = Preset("Barebow", "18m", "40cm", 10, 3)
-        presetList.add(preset1)
-        val preset2 = Preset("Barebow", "50m", "122cm", 5, 6)
-        presetList.add(preset2)
-        val preset3 = Preset("Recurve", "18m", "40cm", 10, 3)
-        presetList.add(preset3)
-        val preset4 = Preset("Recurve", "70m", "122cm", 5, 6)
-        presetList.add(preset4)
+
+        presetList=dbHelper.readPresetList()
 
         recyclerView=findViewById(R.id.recyclerView)
         initRecyclerView()

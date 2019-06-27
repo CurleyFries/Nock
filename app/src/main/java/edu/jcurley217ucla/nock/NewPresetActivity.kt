@@ -1,6 +1,7 @@
 package edu.jcurley217ucla.nock
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.service.autofill.TextValueSanitizer
 import android.support.design.widget.BottomNavigationView
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_new_scoring.view.*
 
 class NewPresetActivity : AppCompatActivity() {
 
+    lateinit var dbHelper: DatabaseHelper
 
     lateinit var bottomNavigationView: BottomNavigationView
     lateinit var menuItem: MenuItem
@@ -43,6 +45,8 @@ class NewPresetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_scoring)
+
+        dbHelper = DatabaseHelper(this)
 
 
 
@@ -125,9 +129,16 @@ class NewPresetActivity : AppCompatActivity() {
             numEnds.text= numberOfEnds.toString()
         }
 
+        //Redundant Save as preset Button
+        val saveAsPresetButton : Button = findViewById(R.id.saveAsPresetButton)
+        saveAsPresetButton.visibility= View.GONE
+
         val savePreset: FloatingActionButton = findViewById(R.id.startScoring)
         savePreset.setOnClickListener {
             val newPreset = Preset(division,distance,target, numberOfEnds, arrowsPerEnd)
+
+            dbHelper.insertPreset(newPreset)
+
             Toast.makeText(applicationContext, "Save Preset Was Pushed", Toast.LENGTH_SHORT).show()
         }
 //        HIDE Loading Presets

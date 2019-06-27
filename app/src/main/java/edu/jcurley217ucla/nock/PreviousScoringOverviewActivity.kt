@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.time.LocalDate
 
 class PreviousScoringOverviewActivity: AppCompatActivity(), ScoringRoundRecyclerAdapter.ViewHolder.OnEndListener {
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 //
