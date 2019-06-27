@@ -10,10 +10,18 @@ import java.text.DecimalFormat
 class ViewPresetsRecyclerAdapter(private var presetList: ArrayList<Preset>, onEndListener: ViewHolder.OnEndListener): RecyclerView.Adapter<ViewPresetsRecyclerAdapter.ViewHolder>() {
 
     val monEndListener = onEndListener
+    lateinit var dbHelper : DatabaseHelper
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val inflater = LayoutInflater.from(p0.context)
+        dbHelper = DatabaseHelper(p0.context)
         return ViewHolder(inflater,p0,monEndListener)
+    }
+
+    fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+        dbHelper.deletePreset(presetList.get(viewHolder.adapterPosition).id)
+        presetList.removeAt(viewHolder.adapterPosition)
+        notifyItemRemoved(viewHolder.adapterPosition)
     }
 
     override fun getItemCount(): Int {

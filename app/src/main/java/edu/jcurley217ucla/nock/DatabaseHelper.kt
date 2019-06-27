@@ -89,6 +89,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             return ArrayList()
         }
 
+        var id: Int
         var date : String
         var division : String
         var distance : String
@@ -98,6 +99,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         var scores: Array<Array<String>>
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
+                id = cursor.getInt(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_ID))
                 date = cursor.getString(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_DATE))
                 division = cursor.getString(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_DIVISION))
                 distance = cursor.getString(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_DISTANCE))
@@ -106,7 +108,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 arrowsPerEnd = cursor.getInt(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWSPEREND))
                 scores = convertToArray(cursor.getString(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWVALUES)), ends, arrowsPerEnd)
 
-                scoringRounds.add(ScoringRound(date, division, distance, targetSize, ends, arrowsPerEnd, scores))
+                scoringRounds.add(ScoringRound(id, date, division, distance, targetSize, ends, arrowsPerEnd, scores))
                 cursor.moveToNext()
             }
         }
@@ -130,6 +132,17 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     }
 
+    fun deletePreset(id: Int): Boolean
+    {
+        val db = writableDatabase
+
+        val selection = NockContract.PresetEntry.COLUMN_NAME_ID + " LIKE ?"
+        val selectionArgs = arrayOf(id.toString())
+        db.delete(NockContract.PresetEntry.TABLE_NAME, selection, selectionArgs)
+
+        return true
+    }
+
     fun readPresetList() : ArrayList<Preset>
     {
         val presetList = ArrayList<Preset>()
@@ -145,6 +158,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             return ArrayList()
         }
 
+        var id : Int
         var division : String
         var distance : String
         var targetSize : String
@@ -152,13 +166,14 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         var arrowsPerEnd : Int
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
+                id = cursor.getInt(cursor.getColumnIndex(NockContract.PresetEntry.COLUMN_NAME_ID))
                 division = cursor.getString(cursor.getColumnIndex(NockContract.PresetEntry.COLUMN_NAME_DIVISION))
                 distance = cursor.getString(cursor.getColumnIndex(NockContract.PresetEntry.COLUMN_NAME_DISTANCE))
                 targetSize = cursor.getString(cursor.getColumnIndex(NockContract.PresetEntry.COLUMN_NAME_TARGETSIZE))
                 ends = cursor.getInt(cursor.getColumnIndex(NockContract.PresetEntry.COLUMN_NAME_NUMENDS))
                 arrowsPerEnd = cursor.getInt(cursor.getColumnIndex(NockContract.PresetEntry.COLUMN_NAME_ARROWSPEREND))
 
-                presetList.add(Preset(division, distance, targetSize, ends, arrowsPerEnd))
+                presetList.add(Preset(id, division, distance, targetSize, ends, arrowsPerEnd))
                 cursor.moveToNext()
             }
         }

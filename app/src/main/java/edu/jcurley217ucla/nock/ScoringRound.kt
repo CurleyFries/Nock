@@ -54,6 +54,7 @@ fun convertFromArray(arrayOfScores: Array<Array<String>>, ends: Int, arrowsPerEn
 
 class ScoringRound(): Serializable {
     //TODO: Get current date
+    var id : Int = -1
     var date : String = ""
     var division : String = ""
     var distance : String = ""
@@ -79,7 +80,8 @@ class ScoringRound(): Serializable {
     }
 
 
-    constructor(date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int, prevScores : Array<Array<String>>) : this() {
+    constructor(id: Int, date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int, prevScores : Array<Array<String>>) : this() {
+        this.id = id
         this.date = date
         this.division = division
         this.distance = distance
