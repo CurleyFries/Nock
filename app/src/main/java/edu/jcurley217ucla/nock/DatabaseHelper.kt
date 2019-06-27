@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
+import android.util.Log
 
 
 class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -61,6 +62,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val values = ContentValues()
         //values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_ID, 1)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DATE, sR.date)
+        Log.i("Insert Date", "date is " + sR.date)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DIVISION, sR.division)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DISTANCE, sR.distance)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_TARGETSIZE, sR.targetSize)
@@ -72,6 +74,17 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
         return true
 
+    }
+
+    fun deleteScoringRound(id: Int): Boolean
+    {
+        val db = writableDatabase
+
+        val selection = NockContract.ScoringRoundEntry.COLUMN_NAME_ID + " LIKE ?"
+        val selectionArgs = arrayOf(id.toString())
+        db.delete(NockContract.ScoringRoundEntry.TABLE_NAME, selection, selectionArgs)
+
+        return true
     }
 
     fun readScoringRoundList() : ArrayList<ScoringRound>

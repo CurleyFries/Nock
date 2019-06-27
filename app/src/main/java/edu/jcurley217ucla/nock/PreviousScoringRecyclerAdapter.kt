@@ -10,10 +10,18 @@ import java.text.DecimalFormat
 class PreviousScoringRecyclerAdapter(private var scoringRoundList: ArrayList<ScoringRound>, onEndListener: ViewHolder.OnEndListener): RecyclerView.Adapter<PreviousScoringRecyclerAdapter.ViewHolder>() {
 
     val monEndListener = onEndListener
+    lateinit var dbHelper: DatabaseHelper
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val inflater = LayoutInflater.from(p0.context)
+        dbHelper = DatabaseHelper(p0.context)
         return ViewHolder(inflater,p0,monEndListener)
+    }
+
+    fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+        dbHelper.deleteScoringRound(scoringRoundList.get(viewHolder.adapterPosition).id)
+        scoringRoundList.removeAt(viewHolder.adapterPosition)
+        notifyItemRemoved(viewHolder.adapterPosition)
     }
 
     override fun getItemCount(): Int {
