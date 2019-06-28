@@ -62,7 +62,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val values = ContentValues()
         //values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_ID, 1)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DATE, sR.date)
-        Log.i("Insert Date", "date is " + sR.date)
+        Log.i("Insert Scores", "scores are " + convertFromArray(sR.scores, sR.ends, sR.arrowsPerEnd))
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DIVISION, sR.division)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DISTANCE, sR.distance)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_TARGETSIZE, sR.targetSize)

@@ -21,6 +21,8 @@ fun convertToArray(text: String, ends: Int, arrowsPerEnd: Int) : Array<Array<Str
             finalArray[indexRow][indexCol]= "10"
         else
             finalArray[indexRow][indexCol]= text.get(i).toString()
+
+        indexCol++
     }
 //   for (i in 0..ends-1)
 //   {
