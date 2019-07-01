@@ -13,6 +13,7 @@ class NockContract {
         const val COLUMN_NAME_NUMENDS = "numEnds"
         const val COLUMN_NAME_ARROWSPEREND = "arrowsPerEnd"
         const val COLUMN_NAME_ARROWVALUES = "arrowValues"
+        const val COLUMN_NAME_NOTES = "notes"
     }
 
     object PresetEntry: BaseColumns {

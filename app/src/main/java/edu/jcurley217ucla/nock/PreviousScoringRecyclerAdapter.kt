@@ -64,7 +64,7 @@ class PreviousScoringRecyclerAdapter(private var scoringRoundList: ArrayList<Sco
         fun bind(scoringRoundList: ArrayList<ScoringRound>, index: Int)
         {
             date?.text = scoringRoundList[index].date
-            totalScore?.text = scoringRoundList[index].computeRunningTotal(numberOfEnds-1).toString()
+            totalScore?.text = scoringRoundList[index].computeRunningTotal(scoringRoundList[index].ends-1).toString()
             var computedScore = (totalScore!!.text.toString().toInt()/(scoringRoundList[index].ends.toDouble()*scoringRoundList[index].arrowsPerEnd))
             val df = DecimalFormat("#.00")
             val finalScore= df.format(computedScore)

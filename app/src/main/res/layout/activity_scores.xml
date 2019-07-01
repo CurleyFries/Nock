@@ -59,7 +59,14 @@
        android:layout_weight="80">
    </android.support.v7.widget.RecyclerView>
 
-    <!--TODO: IMPLEMENT COMPLETE SCORING-->
+    <EditText
+        android:id="@+id/notes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20"
+        android:inputType="textMultiLine"
+        android:hint="Types Notes Here"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -39,6 +39,13 @@ class NewScoringActivity : AppCompatActivity() {
     lateinit var distanceSpinner: Spinner
     lateinit var targetSpinner: Spinner
     lateinit var arrowSpinner: Spinner
+    var notes: Boolean = false
+
+    fun notesCheckboxClicked (view: View) {
+        if(view is CheckBox) {
+            notes = view.isChecked
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -184,6 +191,7 @@ class NewScoringActivity : AppCompatActivity() {
             startScoringIntent.putExtra("targetSize", target)
             startScoringIntent.putExtra("numEnds", numberOfEnds)
             startScoringIntent.putExtra("arrowsPerEnd", arrowsPerEnd)
+            startScoringIntent.putExtra("notes", notes)
             startActivity(startScoringIntent)
             //Toast.makeText(applicationContext, "Start scoring was pushed", Toast.LENGTH_SHORT).show()
         }

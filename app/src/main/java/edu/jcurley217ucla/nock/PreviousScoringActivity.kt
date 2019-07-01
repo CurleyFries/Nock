@@ -15,6 +15,11 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_scoring.*
 import java.time.LocalDate
+import android.view.MotionEvent
+import android.view.View
+import android.view.View.OnTouchListener
+
+
 
 class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapter.ViewHolder.OnEndListener {
 
@@ -61,6 +66,29 @@ class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapt
         initRecyclerView()
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//            var swipeBack = true
+//            override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {
+//                if(swipeBack) {
+//                    swipeBack = false
+//                    return 0
+//                }
+//                return super.convertToAbsoluteDirection(flags, layoutDirection)
+//            }
+//
+//            private fun setTouchListener(c: Canvas,
+//                                         recyclerView: RecyclerView,
+//                                         viewHolder: RecyclerView.ViewHolder,
+//                                         dX: Float, dY: Float,
+//                                         actionState: Int, isCurrentlyActive: Boolean) {
+//
+//                recyclerView.setOnTouchListener(object : View.OnTouchListener() {
+//                    fun onTouch(v: View, event: MotionEvent): Boolean {
+//                        swipeBack = event.action == MotionEvent.ACTION_CANCEL || event.action == MotionEvent.ACTION_UP
+//                        return false
+//                    }
+//                })
+//            }
+
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 var background = ColorDrawable(Color.RED)

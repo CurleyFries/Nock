@@ -47,6 +47,8 @@ fun convertFromArray(arrayOfScores: Array<Array<String>>, ends: Int, arrowsPerEn
             val score = arrayOfScores[i][j]
             if(score=="10")
                 finalText+="T"
+            else if(score == "")
+                finalText+="M"
             else
                 finalText+=score
         }
@@ -64,6 +66,7 @@ class ScoringRound(): Serializable {
     var ends : Int = 1
     var arrowsPerEnd : Int = 1
     lateinit var scores: Array<Array<String>>
+    var notes : String = ""
 
 
     constructor(date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int): this()
@@ -82,7 +85,7 @@ class ScoringRound(): Serializable {
     }
 
 
-    constructor(id: Int, date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int, prevScores : Array<Array<String>>) : this() {
+    constructor(id: Int, date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int, prevScores : Array<Array<String>>, notes: String) : this() {
         this.id = id
         this.date = date
         this.division = division
@@ -91,6 +94,7 @@ class ScoringRound(): Serializable {
         this.ends = ends
         this.arrowsPerEnd = arrowsPerEnd
         scores = prevScores
+        this.notes = notes
     }
 
     fun changeEnd(end: Int, endScores: Array<String>)

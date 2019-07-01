@@ -40,7 +40,8 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                         "${NockContract.ScoringRoundEntry.COLUMN_NAME_TARGETSIZE} TEXT," +
                         "${NockContract.ScoringRoundEntry.COLUMN_NAME_NUMENDS} INTEGER," +
                         "${NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWSPEREND} INTEGER," +
-                        "${NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWVALUES} TEXT)"
+                        "${NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWVALUES} TEXT," +
+                        "${NockContract.ScoringRoundEntry.COLUMN_NAME_NOTES} TEXT)"
         private const val SQL_CREATE_PRESET_ENTRIES =
                 "CREATE TABLE ${NockContract.PresetEntry.TABLE_NAME} (" +
                         "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -57,6 +58,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     fun insertScoringRound(sR: ScoringRound): Boolean
     {
+
         val db = writableDatabase
 
         val values = ContentValues()
@@ -69,6 +71,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_NUMENDS, sR.ends)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWSPEREND, sR.arrowsPerEnd)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWVALUES, convertFromArray(sR.scores,sR.ends, sR.arrowsPerEnd))
+        values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_NOTES, sR.notes)
 
         val newRowID = db.insert(NockContract.ScoringRoundEntry.TABLE_NAME, null, values)
 
@@ -110,6 +113,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         var ends : Int
         var arrowsPerEnd : Int
         var scores: Array<Array<String>>
+        var notes: String
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
                 id = cursor.getInt(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_ID))
@@ -120,8 +124,9 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 ends = cursor.getInt(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_NUMENDS))
                 arrowsPerEnd = cursor.getInt(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWSPEREND))
                 scores = convertToArray(cursor.getString(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_ARROWVALUES)), ends, arrowsPerEnd)
+                notes = cursor.getString(cursor.getColumnIndex(NockContract.ScoringRoundEntry.COLUMN_NAME_NOTES))
 
-                scoringRounds.add(ScoringRound(id, date, division, distance, targetSize, ends, arrowsPerEnd, scores))
+                scoringRounds.add(ScoringRound(id, date, division, distance, targetSize, ends, arrowsPerEnd, scores, notes))
                 cursor.moveToNext()
             }
         }
@@ -131,6 +136,7 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     fun insertPreset(preset: Preset): Boolean
     {
         val db = writableDatabase
+
 
         val values = ContentValues()
         values.put(NockContract.PresetEntry.COLUMN_NAME_DIVISION, preset.division)
