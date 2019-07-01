@@ -1,5 +1,6 @@
 package edu.jcurley217ucla.nock
 
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ class PreviousScoringRecyclerAdapter(private var scoringRoundList: ArrayList<Sco
 
     val monEndListener = onEndListener
     lateinit var dbHelper: DatabaseHelper
+    lateinit var recentlyDeletedScoringRound: ScoringRound
+    var recentlyDeletedPosition: Int = -1
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val inflater = LayoutInflater.from(p0.context)
@@ -19,9 +22,18 @@ class PreviousScoringRecyclerAdapter(private var scoringRoundList: ArrayList<Sco
     }
 
     fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+        recentlyDeletedPosition = viewHolder.adapterPosition
+        recentlyDeletedScoringRound = scoringRoundList.get(viewHolder.adapterPosition)
+
         dbHelper.deleteScoringRound(scoringRoundList.get(viewHolder.adapterPosition).id)
         scoringRoundList.removeAt(viewHolder.adapterPosition)
         notifyItemRemoved(viewHolder.adapterPosition)
+
+        Snackbar.make(viewHolder.itemView, "Scoring Round removed.", Snackbar.LENGTH_LONG).setAction("UNDO") {
+            dbHelper.insertScoringRound(recentlyDeletedScoringRound)
+            scoringRoundList.add(recentlyDeletedPosition, recentlyDeletedScoringRound)
+            notifyItemInserted(recentlyDeletedPosition)
+        }.show()
     }
 
     override fun getItemCount(): Int {

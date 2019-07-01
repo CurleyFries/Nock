@@ -18,7 +18,7 @@ import java.time.LocalDate
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
-
+import kotlin.math.min
 
 
 class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapter.ViewHolder.OnEndListener {
@@ -66,34 +66,15 @@ class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapt
         initRecyclerView()
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-//            var swipeBack = true
-//            override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {
-//                if(swipeBack) {
-//                    swipeBack = false
-//                    return 0
-//                }
-//                return super.convertToAbsoluteDirection(flags, layoutDirection)
-//            }
-//
-//            private fun setTouchListener(c: Canvas,
-//                                         recyclerView: RecyclerView,
-//                                         viewHolder: RecyclerView.ViewHolder,
-//                                         dX: Float, dY: Float,
-//                                         actionState: Int, isCurrentlyActive: Boolean) {
-//
-//                recyclerView.setOnTouchListener(object : View.OnTouchListener() {
-//                    fun onTouch(v: View, event: MotionEvent): Boolean {
-//                        swipeBack = event.action == MotionEvent.ACTION_CANCEL || event.action == MotionEvent.ACTION_UP
-//                        return false
-//                    }
-//                })
-//            }
-
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                var background = ColorDrawable(Color.RED)
+                var background = ColorDrawable(Color.GRAY)
+                if(dX < -(viewHolder.itemView.right/2))
+                {
+                    background = ColorDrawable(Color.RED)
+                }
                 background.setBounds((viewHolder.itemView.right + dX).toInt(),viewHolder.itemView.top, viewHolder.itemView.right, viewHolder.itemView.bottom)
                 background.draw(c)
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }
 
             override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {

@@ -1,5 +1,6 @@
 package edu.jcurley217ucla.nock
 
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ class ViewPresetsRecyclerAdapter(private var presetList: ArrayList<Preset>, onEn
 
     val monEndListener = onEndListener
     lateinit var dbHelper : DatabaseHelper
+    lateinit var recentlyDeletedPreset: Preset
+    var recentlyDeletedPosition: Int = -1
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val inflater = LayoutInflater.from(p0.context)
@@ -19,9 +22,18 @@ class ViewPresetsRecyclerAdapter(private var presetList: ArrayList<Preset>, onEn
     }
 
     fun removeItem(viewHolder: RecyclerView.ViewHolder) {
+        recentlyDeletedPosition=viewHolder.adapterPosition
+        recentlyDeletedPreset=presetList.get(recentlyDeletedPosition)
+
         dbHelper.deletePreset(presetList.get(viewHolder.adapterPosition).id)
         presetList.removeAt(viewHolder.adapterPosition)
         notifyItemRemoved(viewHolder.adapterPosition)
+
+        Snackbar.make(viewHolder.itemView, "Scoring Round removed.", Snackbar.LENGTH_LONG).setAction("UNDO") {
+            dbHelper.insertPreset(recentlyDeletedPreset)
+            presetList.add(recentlyDeletedPosition, recentlyDeletedPreset)
+            notifyItemInserted(recentlyDeletedPosition)
+        }.show()
     }
 
     override fun getItemCount(): Int {

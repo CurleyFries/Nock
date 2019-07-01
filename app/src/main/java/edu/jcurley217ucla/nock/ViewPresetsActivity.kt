@@ -67,10 +67,13 @@ class ViewPresetsActivity: AppCompatActivity(), ViewPresetsRecyclerAdapter.ViewH
 
         val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                var background = ColorDrawable(Color.RED)
+                var background = ColorDrawable(Color.GRAY)
+                if(dX < -(viewHolder.itemView.right/2)) {
+                    background = ColorDrawable(Color.RED)
+                }
                 background.setBounds((viewHolder.itemView.right + dX).toInt(),viewHolder.itemView.top, viewHolder.itemView.right, viewHolder.itemView.bottom)
                 background.draw(c)
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }
 
             override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
