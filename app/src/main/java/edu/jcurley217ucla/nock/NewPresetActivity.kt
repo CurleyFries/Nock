@@ -33,6 +33,9 @@ class NewPresetActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
+            R.id.navigation_scoring -> {
+                finish()
+            }
             R.id.navigation_team -> {
                 val intentTeam = Intent(this,TeamActivity::class.java)
                 startActivity(intentTeam)
@@ -51,8 +54,8 @@ class NewPresetActivity : AppCompatActivity() {
 
 
 //        Bottom Navigation Bar
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         bottomNavigationView = findViewById(R.id.navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         menuItem = bottomNavigationView.menu.getItem(0)
         menuItem.setChecked(true)
 

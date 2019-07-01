@@ -6,11 +6,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_scoring.*
@@ -18,12 +20,15 @@ import java.time.LocalDate
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
+import kotlinx.android.synthetic.main.activity_previous_scoring.*
 import kotlin.math.min
 
 
 class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapter.ViewHolder.OnEndListener {
 
     lateinit var dbHelper: DatabaseHelper
+    lateinit var bottomNavigationView: BottomNavigationView
+    lateinit var menuItem: MenuItem
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -54,9 +59,29 @@ class PreviousScoringActivity: AppCompatActivity(), PreviousScoringRecyclerAdapt
 
     lateinit var recyclerView: RecyclerView
 
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_scoring -> {
+                finish()
+            }
+            R.id.navigation_team -> {
+                val intentTeam = Intent(this,TeamActivity::class.java)
+                startActivity(intentTeam)
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_previous_scoring)
+
+        //        Bottom Navigation Bar
+        bottomNavigationView = findViewById(R.id.navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        menuItem = bottomNavigationView.menu.getItem(0)
+        menuItem.setChecked(true)
 
         dbHelper = DatabaseHelper(this)
 

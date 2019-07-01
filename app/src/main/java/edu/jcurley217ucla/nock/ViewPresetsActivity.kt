@@ -6,11 +6,13 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +21,22 @@ import java.time.LocalDate
 class ViewPresetsActivity: AppCompatActivity(), ViewPresetsRecyclerAdapter.ViewHolder.OnEndListener {
 
     lateinit var dbHelper: DatabaseHelper
+    lateinit var bottomNavigationView: BottomNavigationView
+    lateinit var menuItem: MenuItem
+
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_scoring -> {
+                finish()
+            }
+            R.id.navigation_team -> {
+                val intentTeam = Intent(this,TeamActivity::class.java)
+                startActivity(intentTeam)
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -56,6 +74,12 @@ class ViewPresetsActivity: AppCompatActivity(), ViewPresetsRecyclerAdapter.ViewH
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_presets)
+
+        //        Bottom Navigation Bar
+        bottomNavigationView = findViewById(R.id.navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        menuItem = bottomNavigationView.menu.getItem(0)
+        menuItem.setChecked(true)
 
         dbHelper = DatabaseHelper(this)
 

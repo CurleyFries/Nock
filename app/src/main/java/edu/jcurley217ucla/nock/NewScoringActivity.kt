@@ -10,9 +10,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
-import edu.jcurley217ucla.nock.R.id.divisionSpinner
+import edu.jcurley217ucla.nock.R.id.*
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_new_scoring.*
 import kotlinx.android.synthetic.main.activity_new_scoring.view.*
 
 
@@ -31,10 +32,12 @@ class NewScoringActivity : AppCompatActivity() {
 
     lateinit var bottomNavigationView: BottomNavigationView
     lateinit var menuItem: MenuItem
+    lateinit var dbHelper: DatabaseHelper
     lateinit var numEnds: TextView
     lateinit var increaseButton: Button
     lateinit var decreaseButton: Button
     lateinit var loadFromPresetButton: Button
+    lateinit var saveAsPresetButton: Button
     lateinit var divisionSpinner: Spinner
     lateinit var distanceSpinner: Spinner
     lateinit var targetSpinner: Spinner
@@ -91,6 +94,9 @@ class NewScoringActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
+            R.id.navigation_scoring -> {
+                finish()
+            }
             R.id.navigation_team -> {
                 val intentTeam = Intent(this,TeamActivity::class.java)
                 startActivity(intentTeam)
@@ -104,9 +110,11 @@ class NewScoringActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_scoring)
 
+        dbHelper = DatabaseHelper(this)
+
 //        Bottom Navigation Bar
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         bottomNavigationView = findViewById(R.id.navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         menuItem = bottomNavigationView.menu.getItem(0)
         menuItem.setChecked(true)
 
@@ -195,11 +203,19 @@ class NewScoringActivity : AppCompatActivity() {
             startActivity(startScoringIntent)
             //Toast.makeText(applicationContext, "Start scoring was pushed", Toast.LENGTH_SHORT).show()
         }
-//        Preset Test Button
+//        Load from Preset Button
         loadFromPresetButton = findViewById(R.id.loadPresetButton)
         loadFromPresetButton.setOnClickListener{
             val presetIntent = Intent(this, LoadFromPresetActivity::class.java)
             startActivityForResult(presetIntent, 1)
+        }
+
+        //Save as Preset Button
+        saveAsPresetButton = findViewById(R.id.saveAsPresetButton)
+        saveAsPresetButton.setOnClickListener{
+            var newPreset = Preset(division, distance, target, numberOfEnds, arrowsPerEnd)
+            dbHelper.insertPreset(newPreset)
+            Toast.makeText(applicationContext, "Preset Saved", Toast.LENGTH_SHORT).show()
         }
     }
 }
