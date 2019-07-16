@@ -7,6 +7,8 @@ class NockContract {
         const val TABLE_NAME = "ScoringRounds"
         const val COLUMN_NAME_ID = BaseColumns._ID
         const val COLUMN_NAME_DATE = "date"
+        const val COLUMN_NAME_TOTALSCORE = "totalScore"
+        const val COLUMN_NAME_AVGARROW = "avgArrow"
         const val COLUMN_NAME_DIVISION = "division"
         const val COLUMN_NAME_DISTANCE = "distance"
         const val COLUMN_NAME_TARGETSIZE = "targetSize"

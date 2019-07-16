@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -33,13 +34,19 @@ class TeamActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_team)
 
-        title = findViewById(R.id.teamTitle)
-        title.setText("TEAM ACTIVITY")
+//        title = findViewById(R.id.teamTitle)
+//        title.setText("TEAM ACTIVITY")
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         bottomNavigationView = findViewById(R.id.navigation)
         menuItem = bottomNavigationView.menu.getItem(1)
         menuItem.setChecked(true)
+
+        var joinTeamButton: Button = findViewById(R.id.joinTeamButton)
+        joinTeamButton.setOnClickListener{
+            val joinTeamIntent = Intent(this, ViewAllTeamsActivity::class.java)
+            startActivityForResult(joinTeamIntent, 1)
+        }
     }
 }

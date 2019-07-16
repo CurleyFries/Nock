@@ -131,7 +131,6 @@
             android:text="Include Ability to Add Notes?"
             android:onClick="notesCheckboxClicked"/>
 
-        <!--TODO: IMPLEMENT SAVE AS PRESET FUNCTIONALITY-->
         <Button
             android:id="@+id/saveAsPresetButton"
             android:layout_width="match_parent"

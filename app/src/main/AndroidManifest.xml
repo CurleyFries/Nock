@@ -29,6 +29,7 @@
         <activity android:name=".NewPresetActivity" android:label="Create New Preset"></activity>
         <activity android:name=".ViewPresetsActivity" android:label="View Presets"></activity>
         <activity android:name=".LoadFromPresetActivity" android:label="Load From Preset"></activity>
+        <activity android:name=".ViewAllTeamsActivity" android:label="View All Teams"></activity>
     </application>
 
 </manifest>

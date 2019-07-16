@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!--TODO: Get sort icon-->
+    <item android:id="@+id/sort"
+        android:title="Sort"
+        android:icon="@drawable/ic_home_black_24dp"
+        app:showAsAction="ifRoom"/>
+
+    <!--TODO: Get filter icon-->
+    <item android:id="@+id/filter"
+        android:title="Filter"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        app:showAsAction="ifRoom"/>
+    <!--<item android:id="@+id/action_settings"-->
+        <!--android:title="Action Settings"-->
+        <!--app:showAsAction="never"/>-->
+
+</menu>

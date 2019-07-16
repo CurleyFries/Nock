@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 import android.util.Log
+import java.text.DecimalFormat
 
 
 class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -35,6 +36,8 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 "CREATE TABLE ${NockContract.ScoringRoundEntry.TABLE_NAME} (" +
                         "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "${NockContract.ScoringRoundEntry.COLUMN_NAME_DATE} TEXT," +
+                        "${NockContract.ScoringRoundEntry.COLUMN_NAME_TOTALSCORE} INTEGER," +
+                        "${NockContract.ScoringRoundEntry.COLUMN_NAME_AVGARROW} INTEGER," +
                         "${NockContract.ScoringRoundEntry.COLUMN_NAME_DIVISION} TEXT," +
                         "${NockContract.ScoringRoundEntry.COLUMN_NAME_DISTANCE} TEXT," +
                         "${NockContract.ScoringRoundEntry.COLUMN_NAME_TARGETSIZE} TEXT," +
@@ -64,7 +67,14 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         val values = ContentValues()
         //values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_ID, 1)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DATE, sR.date)
-        Log.i("Insert Scores", "scores are " + convertFromArray(sR.scores, sR.ends, sR.arrowsPerEnd))
+//        Log.i("Insert Scores", "scores are " + convertFromArray(sR.scores, sR.ends, sR.arrowsPerEnd))
+        //TODO: Kinda messy since computation done in two places, should be cleaned up
+        val totalScore = sR.computeRunningTotal(sR.ends-1)
+        var computedScore = (totalScore/(sR.ends.toDouble()*sR.arrowsPerEnd))
+        val df = DecimalFormat("#.00")
+        val finalScore= df.format(computedScore)
+        values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_TOTALSCORE, sR.computeRunningTotal(sR.ends-1))
+        values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_AVGARROW, finalScore)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DIVISION, sR.division)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_DISTANCE, sR.distance)
         values.put(NockContract.ScoringRoundEntry.COLUMN_NAME_TARGETSIZE, sR.targetSize)
@@ -132,6 +142,50 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         }
         return scoringRounds
     }
+//
+//    fun createSearchQuery() : String
+//    {
+//        var query = "SELECT * from " + NockContract.ScoringRoundEntry.TABLE_NAME
+//        if(filter)
+//        {
+//
+//        }
+//        if(sort)
+//        {
+//            query+= "ORDER BY "
+//            //TODO: Primary Sort Key First
+//            if(dateSort)
+//            {
+//                query+= NockContract.ScoringRoundEntry.COLUMN_NAME_DATE + " "
+//                if(dateOrder)
+//                    query += "ASC"
+//                else
+//                    query += "DESC"
+//                if(last!=DATE_SORT)
+//                    query+= ","
+//            }
+//            if()
+//            {
+//                query+= NockContract.ScoringRoundEntry.COLUMN_NAME_DATE + " "
+//                if(dateOrder)
+//                    query += "ASC"
+//                else
+//                    query += "DESC"
+//                if(last!=DATE_SORT)
+//                    query+= ","
+//            }
+//            if(date)
+//            {
+//                query+= NockContract.ScoringRoundEntry.COLUMN_NAME_DATE + " "
+//                if(dateOrder)
+//                    query += "ASC"
+//                else
+//                    query += "DESC"
+//                if(last!=DATE_SORT)
+//                    query+= ","
+//            }
+//        }
+//    }
 
     fun insertPreset(preset: Preset): Boolean
     {
