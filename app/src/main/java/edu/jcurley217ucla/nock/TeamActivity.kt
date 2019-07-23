@@ -43,10 +43,16 @@ class TeamActivity : AppCompatActivity() {
         menuItem = bottomNavigationView.menu.getItem(1)
         menuItem.setChecked(true)
 
+        var viewMyTeamsButton: Button = findViewById(R.id.viewMyTeamsButton)
+        viewMyTeamsButton.setOnClickListener{
+            val myTeamsIntent = Intent(this, ViewMyTeamsActivity::class.java)
+            startActivity(myTeamsIntent)
+        }
+
         var joinTeamButton: Button = findViewById(R.id.joinTeamButton)
         joinTeamButton.setOnClickListener{
             val joinTeamIntent = Intent(this, ViewAllTeamsActivity::class.java)
-            startActivityForResult(joinTeamIntent, 1)
+            startActivity(joinTeamIntent)
         }
     }
 }

@@ -56,6 +56,11 @@ fun convertFromArray(arrayOfScores: Array<Array<String>>, ends: Int, arrowsPerEn
     return finalText
 }
 
+fun convertForMongoDB(arrayOfScores: Array<Array<String>>, ends: Int, arrowsPerEnd: Int)
+{
+
+}
+
 class ScoringRound(): Serializable {
     //TODO: Get current date
     var id : Int = -1

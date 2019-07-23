@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Stitch.initializeDefaultAppClient(resources.getString(R.string.app_id))
+
         bottomNavigationView = findViewById(R.id.navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         menuItem = bottomNavigationView.menu.getItem(0)

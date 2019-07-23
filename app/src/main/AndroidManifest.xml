@@ -30,6 +30,9 @@
         <activity android:name=".ViewPresetsActivity" android:label="View Presets"></activity>
         <activity android:name=".LoadFromPresetActivity" android:label="Load From Preset"></activity>
         <activity android:name=".ViewAllTeamsActivity" android:label="View All Teams"></activity>
+        <activity android:name=".TeamProfileActivity" android:label="View All Teams"></activity>
+        <activity android:name=".SubmitScoringActivity" android:label="Submit Scoring Activity"></activity>
+        <activity android:name=".ViewMyTeamsActivity" android:label="My Teams"></activity>
     </application>
 
 </manifest>

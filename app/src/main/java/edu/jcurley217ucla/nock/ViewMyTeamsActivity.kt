@@ -15,12 +15,14 @@ import com.mongodb.stitch.android.core.Stitch
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient
 import com.mongodb.stitch.core.auth.providers.anonymous.AnonymousCredential
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.team_adapter_view_layout.*
 import org.bson.Document
 import java.time.LocalDate
+import java.util.*
 
-class ViewAllTeamsActivity: AppCompatActivity(), ViewTeamsRecyclerAdapter.ViewHolder.OnEndListener {
+class ViewMyTeamsActivity: AppCompatActivity(), ViewTeamsRecyclerAdapter.ViewHolder.OnEndListener {
 
-//    lateinit var dbHelper: DatabaseHelper
+    //    lateinit var dbHelper: DatabaseHelper
 //    var notesIncluded = false
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -88,16 +90,27 @@ class ViewAllTeamsActivity: AppCompatActivity(), ViewTeamsRecyclerAdapter.ViewHo
         stitchAppClient.auth.loginWithCredential(AnonymousCredential()).addOnSuccessListener {
             Log.i("Stitch", "Logged In Anonymous User")
             val mongoClient = stitchAppClient.getServiceClient(RemoteMongoClient.factory,"mongodb-atlas")
-            val teamProfileCollection = mongoClient.getDatabase("nock" ).getCollection("teamProfiles")
-            val queryAllTeams = teamProfileCollection.find().sort(Document("teamName", 1))
+            val teamMembershipCollection = mongoClient.getDatabase("nock" ).getCollection("teamMembership")
+            val teamProfileCollection = mongoClient.getDatabase("nock").getCollection("teamProfiles")
+            val queryAllTeams = teamMembershipCollection.find(Document().append("user_id", it.id)).projection(Document().append("teamName", 1)).sort(Document("teamName", 1))
             val result = mutableListOf<Document>()
             queryAllTeams.into(result).addOnSuccessListener {
-                Log.i("Stitch", "Query Successful")
+                var teamNameList = arrayListOf<String>()
                 result.forEach {
-                    teamProfileList.add(TeamProfile("Test", it["teamName"] as String, it["teamDesc"] as String))
+                    teamNameList.add(it["teamName"] as String)
                 }
-                recyclerView=findViewById(R.id.recyclerView)
-                initRecyclerView()
+                Log.i("Stitch", "array: " + Arrays.toString(teamNameList.toArray()))
+                val teamNameArray = teamNameList.toTypedArray()
+                val queryMyTeams = teamProfileCollection.find(Document().append("teamName", Document().append("\$in", teamNameArray)))
+                val profileResult = mutableListOf<Document>()
+                queryMyTeams.into(profileResult).addOnSuccessListener {
+                    Log.i("Stitch", profileResult.size.toString())
+                    result.forEach {
+                        teamProfileList.add(TeamProfile("Test", it["teamName"] as String, it["teamDesc"] as String))
+                    }
+                    recyclerView = findViewById(R.id.recyclerView)
+                    initRecyclerView()
+                }
             }
         }
 
