@@ -3,6 +3,7 @@
     <string name="app_name">Nock</string>
     <string name="title_scoring">Scoring</string>
     <string name="title_team">Team</string>
+    <string name="welcome">Welcome to &lt;nock!</string>
 
     <!--Start Scoring Names-->
     <string name="newScoring">New Scoring Round</string>

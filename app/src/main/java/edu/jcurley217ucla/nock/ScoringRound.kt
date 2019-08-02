@@ -1,8 +1,10 @@
 package edu.jcurley217ucla.nock
 
 import java.io.Serializable
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.*
 
 
 fun convertToArray(text: String, ends: Int, arrowsPerEnd: Int) : Array<Array<String>>
@@ -76,7 +78,9 @@ class ScoringRound(): Serializable {
 
     constructor(date: String, division: String, distance: String, targetSize: String, ends: Int, arrowsPerEnd: Int): this()
     {
-        this.date = date
+        var date = Date()
+        val formatter = SimpleDateFormat("MMM dd yyyy")
+        this.date = formatter.format(date).toString()
         this.division = division
         this.distance = distance
         this.targetSize = targetSize

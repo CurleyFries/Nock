@@ -63,12 +63,6 @@
                     android:layout_weight="1"
                     android:text="9"/>
 
-                <Button
-                    android:id="@+id/delButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="DEL"/>
             </LinearLayout>
 
 
@@ -100,11 +94,11 @@
                     android:text="6"/>
 
                 <Button
-                    android:id="@+id/clrButton"
+                    android:id="@+id/delButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="CLR"/>
+                    android:text="DEL"/>
             </LinearLayout>
 
             <LinearLayout
@@ -135,11 +129,11 @@
                     android:text="3"/>
 
                 <Button
-                    android:id="@+id/confirmButton"
+                    android:id="@+id/clrButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Confirm"/>
+                    android:text="CLR"/>
             </LinearLayout>
 
             <LinearLayout
@@ -170,11 +164,11 @@
                     android:text="M"/>
 
                 <Button
-                    android:id="@+id/questionButton"
+                    android:id="@+id/confirmButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="s??"/>
+                    android:text="Confirm"/>
             </LinearLayout>
 
 

@@ -1,6 +1,7 @@
 package edu.jcurley217ucla.nock
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +13,8 @@ import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient
 import com.mongodb.stitch.core.auth.providers.anonymous.AnonymousCredential
 import kotlinx.android.synthetic.main.activity_main.*
 import org.bson.Document
+
+var firstStart: Boolean = true
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +41,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Stitch.initializeDefaultAppClient(resources.getString(R.string.app_id))
+        if(firstStart) {
+            Stitch.initializeDefaultAppClient(resources.getString(R.string.app_id))
+            firstStart = false
+        }
 
         bottomNavigationView = findViewById(R.id.navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
